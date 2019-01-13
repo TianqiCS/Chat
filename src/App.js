@@ -1,28 +1,61 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Chat from "./components/Chat";
+import { Layout } from 'antd';
+import Login from "./components/cijieLogin";
+import {BrowserRouter as Router, Route, Link} from "react-router-dom";
+const { Header, Footer} = Layout;
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+    constructor(props){
+        super(props);
+        this.state = {
+            username :"",
+        }
+    }
+
+    setName = (e) =>{
+        this.setState({username : e.target.value});
+    };
+
+
+    render() {
+        return (
+            <Router>
+                <Layout>
+                <Header>
+                    <ul>
+                        <li>
+                            <Link to="/">Home</Link>
+                        </li>
+                        <li>
+                            <Link to="/about/">About</Link>
+                        </li>
+                        <li>
+                            <Link to="/users/">Users</Link>
+                        </li>
+                    </ul>
+                </Header>
+                <Route path="/" exact render={() => <Index username={this.state.username}/>} />
+                <Route path="/users/" render={() => <Login root={this}/>} />
+                <Footer>Copyright (c) 2018 Tianqi Wang</Footer>
+                </Layout>
+            </Router>
+        );
+    }
 }
 
+const Index = (props) => (
+    <Layout>
+        <Chat username={props.username}/>
+    </Layout>
+);
+
 export default App;
+
+/*
+<Sider>left  sidebar</Sider>
+<Content>
+    <Chat className="Chat" username={props.username}/>
+</Content>
+<Sider>right sidebar</Sider>
+*/
