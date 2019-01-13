@@ -1,0 +1,20 @@
+.login-page {
+    background-color: #001529;
+    height: 100%;
+    width: 100%;
+}
+
+.login-card {
+    text-align: center;
+    width: 350px;
+    margin: 0 auto;
+    background-color: #FFFEEE;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%)
+}
+
+#username {
+    text-align: center;
+}

@@ -1,6 +1,6 @@
 import React from "react";
 import {Input, Card, List, Avatar} from 'antd';
-import '../Chat.css';
+import './Chat.css';
 
 import io from "socket.io-client";
 
@@ -17,7 +17,7 @@ class Chat extends React.Component{
         this.socket = io('199.116.235.157:8080');
 
         this.sendMessage = () => {
-            if (!this.state.username) {alert("Enter a user name first!"); return}
+            if (!this.state.username) {alert("Enter a user name first!"); window.location.href = "/users"; return}
             this.socket.emit('SEND_MESSAGE', {
                 author: this.state.username,
                 message: this.state.message

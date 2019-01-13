@@ -1,67 +1,24 @@
-import React, { Component } from 'react'
-import { Row, Col, Form, Icon, Input, Button } from 'antd';
+import React,{Component} from "react";
+import { Card, Input,Button } from 'antd';
+import {Link} from "react-router-dom";
+import Particles from 'react-particles-js';
+import './Login.css';
 
-const FormItem = Form.Item;
-
-class LoginForm extends Component {
-
-    handleSubmit = (e) => {
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                this.props.submit(values.userName, values.password)
-            }
-        });
-    };
-
-    render() {
-        const { getFieldDecorator } = this.props.form;
+export default class Login extends Component{
+    render(){
         return (
-            <Form onSubmit={this.handleSubmit}>
-                <Row>
-                    <Col>
-                        <FormItem>
-                            {getFieldDecorator('userName', {
-                                rules: [{ required: true, message: "username" }],
-                            })(
-                                <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='username' />
-                            )}
-                        </FormItem>
-                    </Col>
-                    <Col>
-                    <FormItem>
-                        {getFieldDecorator('password', {
-                            rules: [{ required: true, message:'insert_password' }],
-                        })(
-                            <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder='password' />
-                        )}
-                    </FormItem>
-                    </Col>
-                </Row>
-
-                {/* <Row >
-                    <Col>
-                        <FormItem>
-                            {getFieldDecorator('remember', {
-                                valuePropName: 'checked',
-                                initialValue: true,
-                            })(
-                                <Checkbox>Remember me</Checkbox>
-                            )}
-                            <a style={{ float: 'right' }} className="login-form-forgot" href="">Forgot password</a>
-                        </FormItem>
-                    </Col>
-                </Row> */}
-                <Col>
-                    <Button id="login" style={{ width: '100%', background: 'transparent', border: '1px solid #D9B217' }} type="primary" htmlType="submit" className="login-form-button" loading={this.props.loading}>
-                        sign in
-                    </Button>
-                </Col>
-            </Form>
+            <div className="login-page">
+                <Particles/>
+                <Card className="login-card"
+                    cover={<img alt="example" src="http://lorempixel.com/350/200/" />}
+                >
+                    <div id="username">
+                        <Input placeholder="Username" maxLength={10} value={this.props.root.state.username} onChange={this.props.root.setName}/>
+                        <Link to="/"><Button icon={"arrow-right"} type={"primary"}>Go!</Button></Link>
+                    </div>
+                </Card>
+            </div>
         );
     }
+
 }
-
-const WrappedLoginForm = Form.create()(LoginForm);
-
-export default WrappedLoginForm

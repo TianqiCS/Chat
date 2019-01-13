@@ -35,26 +35,3 @@ code {
 #root {
   height: 100%;
 }
-
-.ant-input{
-  width: 40%;
-}
-
-.messages {
-  min-height: 30%;
-}
-#chat {
-  width: 80% ;
-  left: 10%;
-}
-
-#chatbox {
-  min-height: 30vmax;
-  max-height: 70vmax;
-  overflow-y:auto;
-}
-
-li {
-  display:inline;
-  margin: 3vh;
-}

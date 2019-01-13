@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Chat from "./components/Chat";
 import { Layout } from 'antd';
-import Login from "./components/cijieLogin";
+import Login from "./components/Login";
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 const { Header, Footer} = Layout;
 
