@@ -16,7 +16,7 @@ class FileUpload extends React.Component {
         const props = {
             name: 'file',
             multiple: true,
-            action: 'http://localhost:8001/upload',
+            action: 'http://vanillacraft.cn:8001/upload',
 
             onChange(info) {
                 const status = info.file.status;

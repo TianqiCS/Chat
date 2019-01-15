@@ -8,12 +8,18 @@
 #chat {
     width: 80% ;
     left: 10%;
+    max-height: 80vmax;
+    overflow-y:auto;
 }
 
 #chatbox {
-    min-height: 30vmax;
-    max-height: 70vmax;
+    min-height: 40vmax;
+    max-height: 40vmax;
     overflow-y:auto;
+}
+
+#filebox {
+    width: 99%;
 }
 
 li {

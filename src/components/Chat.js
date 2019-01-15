@@ -15,10 +15,12 @@ class Chat extends React.Component{
                 text: "",
                 files: [],
             },
-            messages: []
-        };
 
-        this.socket = io('localhost:8000');
+            messages: sessionStorage.getItem('messages') ? JSON.parse(sessionStorage.getItem('messages')) : []
+        };
+        console.log(this.state.messages[0]);
+
+        this.socket = io('http://vanillacraft.cn:8000');
 
         this.sendMessage = () => {
             if (!this.state.username) {alert("Enter a user name first!"); window.location.href = "/users"; return}
@@ -40,9 +42,16 @@ class Chat extends React.Component{
         const addMessage = data => {
             console.log(data);
             this.setState({messages: [...this.state.messages, data]});
+            sessionStorage.setItem('messages', JSON.stringify(this.state.messages));
             console.log(this.state.messages);
         };
 
+        const clearMessage = () => {
+            sessionStorage.setItem('messages', JSON.stringify([]));
+            this.setState({
+                messages: JSON.parse(sessionStorage.getItem('messages'))
+            })
+        }
 
 
     }
@@ -61,7 +70,9 @@ class Chat extends React.Component{
                                     title={<a href="/users">{message.author}</a>}
                                     description={message.message.text}
                                 />
+                                {message.message.files.length > 0 &&
                                 <List
+                                    id = "filebox"
                                     size= "small"
                                     itemLayout="horizontal"
                                     grid={{ gutter: 12, column: 4 }}
@@ -69,27 +80,25 @@ class Chat extends React.Component{
                                     locale={{emptyText: ''}}
                                     renderItem={file => (
                                         <List.Item>
-                                            <Popover content={<a href= {"http://localhost:8001/public/"+file} download> {<Icon type="download" />} </a> }>
-                                            <Card
+                                            <Popover content={<a href= {"http://vanillacraft.cn:8001/public/"+file} download> {<Icon type="download" />} </a> }>
+                                                <Card
 
-                                                hoverable
-                                                style={{
-                                                    objectFit: "fill",
-                                                    height: "auto"
-                                                }}
-                                                cover={<img alt={file} src={"http://localhost:8001/public/"+file} />}
-                                            >
-                                                <Card.Meta
-                                                    description={file}
-                                                />
-                                            </Card>
+                                                    hoverable
+                                                    style={{
+                                                        objectFit: "fill",
+                                                        height: "100%"
+                                                    }}
+                                                    cover={<img alt={file} src={"http://vanillacraft.cn:8001/public/"+file} />}
+                                                >
+                                                    <Card.Meta
+                                                        description={file}
+                                                    />
+                                                </Card>
                                             </Popover>
                                         </List.Item>
-                                        )}
-                                />
+                                    )}
+                                />}
                             </List.Item>
-
-
                           )}
                     />
                 <Input.Group>
