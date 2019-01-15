@@ -1,5 +1,5 @@
 import React from "react";
-import {Input, Card, List, Avatar} from 'antd';
+import {Input, Card, List, Avatar, Popover, Icon} from 'antd';
 import './Chat.css';
 
 import io from "socket.io-client";
@@ -11,11 +11,14 @@ class Chat extends React.Component{
 
         this.state = {
             username: this.props.username,
-            message: '',
+            message: {
+                text: "",
+                files: [],
+            },
             messages: []
         };
 
-        this.socket = io('l27.0.0.1:8080');
+        this.socket = io('localhost:8000');
 
         this.sendMessage = () => {
             if (!this.state.username) {alert("Enter a user name first!"); window.location.href = "/users"; return}
@@ -23,7 +26,10 @@ class Chat extends React.Component{
                 author: this.state.username,
                 message: this.state.message
             });
-            this.setState({message: ''});
+            this.setState({message: {
+                    text: "",
+                    files: [],
+                }});
         };
 
 
@@ -37,6 +43,8 @@ class Chat extends React.Component{
             console.log(this.state.messages);
         };
 
+
+
     }
     render(){
         const Send = Input.Search;
@@ -44,23 +52,51 @@ class Chat extends React.Component{
                 <Card id="chat" title="Chat Message" className="messages" type="inner" >
                     <List id="chatbox"
                           size="small"
-                        itemLayout="horizontal"
-                        dataSource={this.state.messages}
-                        renderItem={message => (
+                          itemLayout="vertical"
+                          dataSource={this.state.messages}
+                          renderItem={message => (
                             <List.Item>
                                 <List.Item.Meta
                                     avatar={<Avatar src="http://lorempixel.com/100/100/" />}
                                     title={<a href="/users">{message.author}</a>}
-                                    description={message.message}
+                                    description={message.message.text}
+                                />
+                                <List
+                                    size= "small"
+                                    itemLayout="horizontal"
+                                    grid={{ gutter: 12, column: 4 }}
+                                    dataSource={message.message.files}
+                                    locale={{emptyText: ''}}
+                                    renderItem={file => (
+                                        <List.Item>
+                                            <Popover content={<a href= {"http://localhost:8001/public/"+file} download> {<Icon type="download" />} </a> }>
+                                            <Card
+
+                                                hoverable
+                                                style={{
+                                                    objectFit: "fill",
+                                                    height: "auto"
+                                                }}
+                                                cover={<img alt={file} src={"http://localhost:8001/public/"+file} />}
+                                            >
+                                                <Card.Meta
+                                                    description={file}
+                                                />
+                                            </Card>
+                                            </Popover>
+                                        </List.Item>
+                                        )}
                                 />
                             </List.Item>
-                        )}
+
+
+                          )}
                     />
                 <Input.Group>
-                    <Send type="text" placeholder="Message" className="form-control" value={this.state.message} onChange={ev => this.setState({message: ev.target.value})}
+                    <Send type="text" placeholder="Message" className="form-control" value={this.state.message.text} onChange={ev => this.setState({message: {text: ev.target.value, files: this.state.message.files}})}
                            onPressEnter={this.sendMessage} enterButton="Send" onSearch={this.sendMessage}/>
                     <h2> File upload </h2>
-                    <FileUpload />
+                    <FileUpload files = {this.state.message.files}/>
                 </Input.Group>
                 </Card>
         );

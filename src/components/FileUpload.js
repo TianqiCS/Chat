@@ -11,11 +11,13 @@ class FileUpload extends React.Component {
     }
 
     render() {
+        let files = this.props.files;
         const Dragger = Upload.Dragger;
         const props = {
             name: 'file',
             multiple: true,
-            action: 'http://localhost:8000/upload',
+            action: 'http://localhost:8001/upload',
+
             onChange(info) {
                 const status = info.file.status;
                 if (status !== 'uploading') {
@@ -23,7 +25,12 @@ class FileUpload extends React.Component {
                 }
                 if (status === 'done') {
                     message.success(`${info.file.name} file uploaded successfully.`);
-                } else if (status === 'error') {
+                    files.push(info.file.name)
+                }
+                else if (status === 'removed') {
+                   files.splice( files.indexOf(info.file.name), 1 );
+                }
+                else if (status === 'error') {
                     message.error(`${info.file.name} file upload failed.`);
                 }
             },
