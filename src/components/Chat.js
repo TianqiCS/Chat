@@ -3,6 +3,7 @@ import {Input, Card, List, Avatar} from 'antd';
 import './Chat.css';
 
 import io from "socket.io-client";
+import FileUpload from "./FileUpload";
 
 class Chat extends React.Component{
     constructor(props){
@@ -14,7 +15,7 @@ class Chat extends React.Component{
             messages: []
         };
 
-        this.socket = io('199.116.235.157:8080');
+        this.socket = io('l27.0.0.1:8080');
 
         this.sendMessage = () => {
             if (!this.state.username) {alert("Enter a user name first!"); window.location.href = "/users"; return}
@@ -58,6 +59,8 @@ class Chat extends React.Component{
                 <Input.Group>
                     <Send type="text" placeholder="Message" className="form-control" value={this.state.message} onChange={ev => this.setState({message: ev.target.value})}
                            onPressEnter={this.sendMessage} enterButton="Send" onSearch={this.sendMessage}/>
+                    <h2> File upload </h2>
+                    <FileUpload />
                 </Input.Group>
                 </Card>
         );
