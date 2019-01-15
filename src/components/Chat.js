@@ -75,7 +75,7 @@ class Chat extends React.Component{
                                     id = "filebox"
                                     size= "small"
                                     itemLayout="horizontal"
-                                    grid={{ gutter: 12, column: 4 }}
+                                    grid={{ gutter: 12, xs: 1, sm: 2, md: 4, lg: 4, xl: 6, xxl: 3, }}
                                     dataSource={message.message.files}
                                     locale={{emptyText: ''}}
                                     renderItem={file => (
