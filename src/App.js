@@ -3,6 +3,7 @@ import Chat from "./components/Chat";
 import { Layout } from 'antd';
 import Login from "./components/Login";
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
+import Stream from "./components/Stream";
 const { Header, Footer} = Layout;
 
 class App extends Component {
@@ -37,6 +38,7 @@ class App extends Component {
                 </Header>
                 <Route path="/" exact render={() => <Index username={this.state.username}/>} />
                 <Route path="/users/" render={() => <Login root={this}/>} />
+                <Route path="/about/" render={() => <Stream/>} />
                 <Footer>Copyright (c) 2018 Tianqi Wang</Footer>
                 </Layout>
             </Router>
